@@ -26,24 +26,25 @@ class nggMyWidget extends WP_Widget {
 		// check if the custom field has a value
 		if( ! empty( $id_galleria ) ) { 
 			// slideshow
-			$options = array(   'galleryid' => $id_galleria,
-								'width'     => '250', 
-								'height'    => '190' );
+			$options = array( 'title'     => ' ',
+					  'galleryid' => $id_galleria,
+					  'width'     => '250', 
+					  'height'    => '190' );
 			$ngg_widget1 = new nggSlideshowWidget();
 			$ngg_widget1->widget($args = array( 'widget_id'=> 'my_sidebar_1' ), $options);
 			// empty arrays
 			$options = array(); $args = array();
 			// thumbnails
 			$options = array('title'    => false, 
-							 'items'    => 6,
-							 'show'     => 'thumbnail' ,
-							 'type'     => 'id',
-							 'galleryid' => $id_galleria,
-							 'width'    => '75', 
-							 'height'   => '50', 
-							 'exclude'  => 'all',
-							 'list'     => '',
-							 'webslice' => false );
+					 'items'    => 6,
+					 'show'     => 'thumbnail' ,
+					 'type'     => 'id',
+					 'galleryid' => $id_galleria,
+					 'width'    => '75', 
+					 'height'   => '50', 
+					 'exclude'  => 'all',
+					 'list'     => '',
+					 'webslice' => false );
 							
 			$ngg_widget2 = new nggMyNggWidget();
 			$ngg_widget2->widget($args = array( 'widget_id'=> 'my_sidebar_2' ), $options);
