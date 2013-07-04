@@ -10,7 +10,7 @@ License: GPLv2 or later
 */
 class nggMyWidget extends WP_Widget {
     function nggMyWidget() {
-        parent::__construct( false, 'Il mio Widget' );
+        parent::__construct( false, 'ngg My Widget' );
     }
     function widget( $args, $instance ) {
         extract($args);
@@ -18,40 +18,42 @@ class nggMyWidget extends WP_Widget {
         echo $before_title.$instance['title'].$after_title;
  
         //DA QUI INIZIA IL WIDGET VERO E PROPRIO
-        echo "Ciao WordPress";
-  	 
+		?>
+		<div class="foto_collegate">
+		<!-- <h3 class="sidetitl">foto collegate</h3> -->
+		<?php 		 
 		$id_galleria = get_post_meta( get_the_ID(), 'gallery_id', true );
 		// check if the custom field has a value
-		if( ! empty( $id_galleria ) ) { ?>
-		  <div class="foto_collegate">
-			<h3 class="sidetitl">foto collegate</h3>
-			<?php 
+		if( ! empty( $id_galleria ) ) { 
+			// slideshow
 			$options = array(   'galleryid' => $id_galleria,
 								'width'     => '250', 
 								'height'    => '190' );
 			$ngg_widget1 = new nggSlideshowWidget();
 			$ngg_widget1->widget($args = array( 'widget_id'=> 'my_sidebar_1' ), $options);
-			?>
+			// empty arrays
+			$options = array(); $args = array();
+			// thumbnails
+			$options = array('title'    => false, 
+							 'items'    => 6,
+							 'show'     => 'thumbnail' ,
+							 'type'     => 'id',
+							 'galleryid' => $id_galleria,
+							 'width'    => '75', 
+							 'height'   => '50', 
+							 'exclude'  => 'all',
+							 'list'     => '',
+							 'webslice' => false );
+							
+			$ngg_widget2 = new nggMyNggWidget();
+			$ngg_widget2->widget($args = array( 'widget_id'=> 'my_sidebar_2' ), $options);
+		} else {
+			echo "Nessuna immagine caricata";
+		}
+		?>
 		  </div>
-	  
 	    <?php
-		} 
-		// empty arrays
-		$options = array(); $args = array();
 		
-		$options = array('title'    => false, 
-						 'items'    => 6,
-						 'show'     => 'thumbnail' ,
-						 'type'     => 'id',
-						 'width'    => '75', 
-						 'height'   => '50', 
-						 'exclude'  => 'all',
-						 'list'     => '',
-                         'webslice' => false );
-                        
-		$ngg_widget2 = new eiNggWidget();
-		$ngg_widget2->widget($args = array( 'widget_id'=> 'my_sidebar_2' ), $options);
-
 		//the_widget($widget, $instance, $args);
         //FINE WIDGET
  
@@ -76,7 +78,7 @@ function my_register_widgets() {
 add_action( 'widgets_init', 'my_register_widgets' );
 
 
-class eiNggWidget extends nggWidget {
+class nggMyNggWidget extends nggWidget {
 
 	function widget( $args, $instance ) {
 		extract( $args );
@@ -167,7 +169,7 @@ class eiNggWidget extends nggWidget {
 } // end class eiNggWidget
 
 // register it
-add_action('widgets_init', create_function('', 'return register_widget("eiNggWidget");'));
+add_action('widgets_init', create_function('', 'return register_widget("nggMyNggWidget");'));
 
 
 ?>
